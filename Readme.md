@@ -30,7 +30,8 @@ study-agent/
 │   ├── chat.html          # UI
 │
 ├── static/
-│   ├── css/style.css      # Styling
+│   ├── css/
+│   │   └── style.css      # Styling
 │
 ├── .env                   # API keys
 ├── requirements.txt
