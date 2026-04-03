@@ -1,61 +1,207 @@
-# 🎓 Agentic Study AI
+# 📄 AI PDF Query Assistant
 
-Agentic Study AI is an AI-powered learning assistant that helps students understand content smarter by supporting both **PDF-based learning** and **interactive chat**.
+An intelligent **PDF question-answering application** that allows users to chat with PDFs, extract insights, and navigate directly to relevant content with clickable, highlighted sources.
+
+Built using **Streamlit, Groq LLMs, and vector search**, this project transforms static PDFs into interactive knowledge systems.
 
 ---
 
 ## 🚀 Features
 
-- 📄 Upload PDF documents  
-- 💬 Ask questions directly (chat mode)  
-- 🧠 AI-powered answers and explanations  
-- 🔍 Context-based responses from PDFs  
-- ⚡ Fast and interactive responses  
-- 🔐 Secure API key handling using `.env`  
+### 🔍 Ask Questions from PDFs
+
+* Upload any PDF and ask questions in natural language
+* Get accurate answers strictly based on document content
 
 ---
 
-📂 Project Structure
-study-agent/
-│
-├── app/
-│   ├── routes.py          # Backend logic
-│   ├── __init__.py        # Flask setup
-│
-├── services/
-│   ├── groq_service.py    # AI API calls
-│   ├── pdf_service.py     # PDF processing
-│
-├── templates/
-│   ├── chat.html          # UI
-│
-├── static/
-│   ├── css/
-│   │   └── style.css      # Styling
-│
-├── .env                   # API keys
-├── requirements.txt
-├── run.py
+### 🧠 AI-Powered Responses
 
-## 🛠 Tech Stack
-
-- Python  
-- Flask (or backend script)  
-- Groq API  
-- PyPDF2  
-- dotenv  
+* Powered by **Groq (LLaMA 3.3 70B)**
+* Context-aware answers using retrieved PDF chunks
+* Maintains conversational memory for follow-ups
 
 ---
 
-## 📦 How to Run
+### 📌 Clickable Source References
 
-1️⃣ Clone Repository
-git clone https://github.com/your-username/agentic-study-ai.git
-cd agentic-study-ai
-2️⃣ Create Virtual Environment
-python -m venv venv
-venv\Scripts\activate
-3️⃣ Install Dependencies
+Each answer includes source citations.
+
+Click a source to:
+
+* Open the PDF
+* Jump to the exact page
+* View the relevant text
+
+---
+
+### 💡 Smart Suggestions
+
+* Dynamically generated follow-up questions
+* Helps users explore documents more effectively
+
+---
+
+### 📝 PDF Summarization
+
+Generates structured summaries:
+
+* Overview
+* Key Points
+* Conclusion
+
+---
+
+### 🔊 Text-to-Speech
+
+* Converts AI responses into audio
+
+---
+
+### 📥 Export Chat
+
+* Download conversation history as a PDF
+
+---
+
+## 🏗️ Tech Stack
+
+| Component       | Technology               |
+| --------------- | ------------------------ |
+| Frontend        | Streamlit                |
+| LLM API         | Groq (LLaMA 3.3 70B)     |
+| Embeddings      | HuggingFace Transformers |
+| Vector Database | FAISS                    |
+| PDF Processing  | PyPDF                    |
+| Text-to-Speech  | gTTS                     |
+| PDF Export      | ReportLab                |
+
+---
+
+## ⚙️ How It Works
+
+1. Upload a PDF
+2. Text is extracted and split into chunks
+3. Chunks are converted into embeddings
+4. Stored in a FAISS vector database
+5. User asks a question
+6. Relevant chunks are retrieved
+7. LLM generates an answer using context
+8. Sources are displayed with page navigation
+
+---
+
+## 📸 Demo Flow
+
+1. Upload a PDF
+2. Ask a question
+3. Get AI-generated answer
+4. Click source → open PDF → view relevant section
+
+---
+
+## ▶️ Installation & Setup
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/Sa-1-droid/PDFquery.git
+cd PDFquery
+```
+
+---
+
+### 2️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
-▶️ Run App
-python run.py
+```
+
+---
+
+## 🔑 Set API Key (IMPORTANT)
+
+This project requires a **Groq API key**.
+
+Open `qa_engine.py` and find:
+
+```python
+GROQ_API_KEY="ENTER YOUR API KEY"
+```
+
+Replace with:
+
+```python
+GROQ_API_KEY="your_actual_api_key"
+```
+
+⚠️ **Do NOT share your API key publicly.**
+
+---
+
+## ▶️ Run App
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 📂 Project Structure
+
+```bash
+├── app.py              # Main Streamlit app
+├── pdf_utils.py        # PDF loading & processing
+├── vector_store.py     # Embeddings & FAISS setup
+├── qa_engine.py        # LLM interaction logic
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🧪 Use Cases
+
+* 📚 Study and revision from textbooks
+* 📄 Research paper understanding
+* 🧾 Legal or financial document analysis
+* 🏫 School and academic projects
+
+---
+
+## ⚠️ Limitations
+
+* Highlighting depends on browser PDF viewer
+* Not pixel-perfect highlighting
+* Large PDFs may load slower
+
+---
+
+## 🔮 Future Improvements
+
+* Precise text highlighting using PDF.js
+* Multi-PDF querying
+* Persistent chat history
+* Improved UI/UX
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+Feel free to open issues or submit pull requests.
+
+---
+
+## ⭐ Support
+
+If you found this project useful:
+
+* ⭐ Star this repository
+* 📢 Share it with others
+
+---
+
+## 📬 Contact
+
+For queries or collaboration, feel free to reach out!
