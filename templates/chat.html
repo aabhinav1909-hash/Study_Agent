@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agentic Study AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>💬 Chats</h2>
+
+        <!-- New Chat -->
+        <a href="/new_chat" class="new-chat-btn">+ New Chat</a>
+
+        <!-- Chat List -->
+        {% if chats %}
+            {% for chat_id in chats %}
+                <a href="/switch_chat/{{ chat_id }}"
+                   class="chat-item {% if chat_id == current_chat %}active{% endif %}">
+                    {{ chats[chat_id]["title"] }}
+                </a>
+            {% endfor %}
+        {% else %}
+            <p style="opacity:0.6;">No chats yet</p>
+        {% endif %}
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- HEADER -->
+        <div class="header">
+            🤖 Agentic Study AI
+        </div>
+
+        <!-- 🔥 SHOW LOADED PDFs -->
+        {% if pdf_names %}
+        <div class="pdf-info">
+            📄 Loaded:
+            {% for name in pdf_names %}
+                <span class="pdf-tag">{{ name }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- CHAT -->
+        <div class="chat-box">
+            {% if chats and current_chat in chats %}
+                {% for msg in chats[current_chat]["messages"] %}
+                    {% if msg.role == "user" %}
+                        <div class="msg user">{{ msg.content }}</div>
+                    {% else %}
+                        <div class="msg ai">{{ msg.content | safe }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p style="text-align:center; opacity:0.7;">Start a new chat 👇</p>
+            {% endif %}
+        </div>
+
+        <!-- INPUT -->
+        <form method="POST" class="input-area" enctype="multipart/form-data">
+
+            <!-- Text -->
+            <input type="text" name="topic" placeholder="Ask anything...">
+
+            <!-- Multiple PDF Upload -->
+            <label class="file-label">
+                📄 Upload
+                <input type="file" name="pdf" accept=".pdf" multiple>
+            </label>
+
+            <!-- Send -->
+            <button type="submit">Send</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Auto Scroll -->
+<script>
+    const chat = document.querySelector(".chat-box");
+    if (chat) {
+        chat.scrollTop = chat.scrollHeight;
+    }
+</script>
+
+<!-- Enter to send -->
+<script>
+    const input = document.querySelector("input[name='topic']");
+    if (input) {
+        input.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                this.form.submit();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
