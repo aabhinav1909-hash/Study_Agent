@@ -1,102 +1,118 @@
-# 📄 AI PDF Query Assistant
+# 🤖 Agentic Study AI
 
-An intelligent **PDF question-answering application** that allows users to chat with PDFs, extract insights, and navigate directly to relevant content with clickable, highlighted sources.
+An intelligent **Agentic AI-powered study assistant** that helps users learn efficiently by generating study plans, explanations, quizzes, and enabling PDF-based question answering.
 
-Built using **Streamlit, Groq LLMs, and vector search**, this project transforms static PDFs into interactive knowledge systems.
+Built using **Flask, Groq LLMs, and PDF processing**, this project transforms static learning resources into an interactive AI-driven study system.
 
 ---
 
 ## 🚀 Features
 
-### 🔍 Ask Questions from PDFs
+### 🧠 Agentic AI System
 
-* Upload any PDF and ask questions in natural language
-* Get accurate answers strictly based on document content
+* Automatically decides what actions are required based on user input
+* Supports:
 
----
-
-### 🧠 AI-Powered Responses
-
-* Powered by **Groq (LLaMA 3.3 70B)**
-* Context-aware answers using retrieved PDF chunks
-* Maintains conversational memory for follow-ups
+  * 📅 Study Plan Generation
+  * 📘 Concept Explanation
+  * 📝 Quiz Creation
 
 ---
 
-### 📌 Clickable Source References
+### 💬 Smart Chat System
 
-Each answer includes source citations.
-
-Click a source to:
-
-* Open the PDF
-* Jump to the exact page
-* View the relevant text
+* Multi-chat support with separate memory
+* Chat history maintained using session
+* Clean ChatGPT-like UI
 
 ---
 
-### 💡 Smart Suggestions
+### 📄 PDF Analysis
 
-* Dynamically generated follow-up questions
-* Helps users explore documents more effectively
+* Upload single or multiple PDFs
+* Extract and analyze document content
+* Generate:
 
----
-
-### 📝 PDF Summarization
-
-Generates structured summaries:
-
-* Overview
-* Key Points
-* Conclusion
+  * 📘 Summary
+  * 📌 Key Points
+  * 📝 Quiz Questions
 
 ---
 
-### 🔊 Text-to-Speech
+### 🔍 Ask Questions from PDF
 
-* Converts AI responses into audio
+* Ask questions in natural language
+* AI answers using **only uploaded PDF content**
+* Context-aware responses
 
 ---
 
-### 📥 Export Chat
+### 📂 Multi-Chat Memory
 
-* Download conversation history as a PDF
+* Each chat maintains:
+
+  * Independent history
+  * Separate context
+* Easily switch between chats
 
 ---
 
 ## 🏗️ Tech Stack
 
-| Component       | Technology               |
-| --------------- | ------------------------ |
-| Frontend        | Streamlit                |
-| LLM API         | Groq (LLaMA 3.3 70B)     |
-| Embeddings      | HuggingFace Transformers |
-| Vector Database | FAISS                    |
-| PDF Processing  | PyPDF                    |
-| Text-to-Speech  | gTTS                     |
-| PDF Export      | ReportLab                |
+| Component      | Technology           |
+| -------------- | -------------------- |
+| Frontend       | HTML, CSS            |
+| Backend        | Flask (Python)       |
+| LLM API        | Groq (LLaMA 3.3 70B) |
+| PDF Processing | PyPDF2               |
+| State Mgmt     | Flask Session        |
 
 ---
 
 ## ⚙️ How It Works
 
-1. Upload a PDF
-2. Text is extracted and split into chunks
-3. Chunks are converted into embeddings
-4. Stored in a FAISS vector database
-5. User asks a question
-6. Relevant chunks are retrieved
-7. LLM generates an answer using context
-8. Sources are displayed with page navigation
+1. User enters a query or uploads PDF
+2. System identifies input type:
+
+   * Text → Agent decision system
+   * PDF → Text extraction
+3. Agent decides required actions
+4. Executes tools (planner, tutor, quiz)
+5. AI generates structured response
+6. Output is displayed in chat interface
+7. Data stored in session for context
 
 ---
 
 ## 📸 Demo Flow
 
-1. Upload a PDF
-2. Ask a question
-3. Get AI-generated answer
-4. Click source → open PDF → view relevant section
+### 💬 Chat Mode
+
+1. Enter a topic
+2. Get:
+
+   * Study plan
+   * Explanation
+   * Quiz
+
+---
+
+### 📄 PDF Mode
+
+1. Upload PDF
+2. AI generates:
+
+   * Summary
+   * Key points
+   * Quiz
+
+---
+
+### 🔍 PDF Question Answering
+
+1. Upload PDF
+2. Ask question
+3. Get answer based on document content
 
 ---
 
@@ -105,13 +121,22 @@ Generates structured summaries:
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/Sa-1-droid/PDFquery.git
-cd PDFquery
+git clone https://github.com/your-username/agentic-study-ai.git
+cd agentic-study-ai
 ```
 
 ---
 
-### 2️⃣ Install Dependencies
+### 2️⃣ Create Virtual Environment
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+---
+
+### 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -121,18 +146,10 @@ pip install -r requirements.txt
 
 ## 🔑 Set API Key (IMPORTANT)
 
-This project requires a **Groq API key**.
+Create a `.env` file and add:
 
-Open `qa_engine.py` and find:
-
-```python
-GROQ_API_KEY="ENTER YOUR API KEY"
-```
-
-Replace with:
-
-```python
-GROQ_API_KEY="your_actual_api_key"
+```env
+GROQ_API_KEY=your_api_key_here
 ```
 
 ⚠️ **Do NOT share your API key publicly.**
@@ -142,7 +159,13 @@ GROQ_API_KEY="your_actual_api_key"
 ## ▶️ Run App
 
 ```bash
-streamlit run app.py
+python run.py
+```
+
+Open in browser:
+
+```text
+http://127.0.0.1:5000
 ```
 
 ---
@@ -150,39 +173,55 @@ streamlit run app.py
 ## 📂 Project Structure
 
 ```bash
-├── app.py              # Main Streamlit app
-├── pdf_utils.py        # PDF loading & processing
-├── vector_store.py     # Embeddings & FAISS setup
-├── qa_engine.py        # LLM interaction logic
+study-agent/
+│
+├── app/
+│   ├── routes.py          # Backend logic
+│   ├── __init__.py        # Flask setup
+│
+├── services/
+│   ├── groq_service.py    # AI API calls
+│   ├── pdf_service.py     # PDF processing
+│
+├── templates/
+│   ├── chat.html          # UI
+│
+├── static/
+│   ├── css/
+│   │   └── style.css      # Styling
+│
+├── .env                   # API keys
 ├── requirements.txt
-└── README.md
+├── run.py
 ```
 
 ---
 
 ## 🧪 Use Cases
 
-* 📚 Study and revision from textbooks
-* 📄 Research paper understanding
-* 🧾 Legal or financial document analysis
-* 🏫 School and academic projects
+* 📚 Study planning and revision
+* 📄 Understanding PDFs and notes
+* 🧾 Quick concept explanations
+* 🏫 Academic learning
+* 📝 Self-assessment using quizzes
 
 ---
 
 ## ⚠️ Limitations
 
-* Highlighting depends on browser PDF viewer
-* Not pixel-perfect highlighting
-* Large PDFs may load slower
+* Uses session-based memory (not persistent)
+* Large PDFs may slow response
+* No vector database (basic retrieval approach)
 
 ---
 
 ## 🔮 Future Improvements
 
-* Precise text highlighting using PDF.js
-* Multi-PDF querying
-* Persistent chat history
-* Improved UI/UX
+* 💾 Database for persistent chat history
+* 🔍 Vector search (RAG for PDFs)
+* 🎤 Voice input
+* ⚡ Streaming responses
+* 🌐 Cloud deployment
 
 ---
 
@@ -199,6 +238,12 @@ If you found this project useful:
 
 * ⭐ Star this repository
 * 📢 Share it with others
+
+---
+
+## 👨‍💻 Author
+
+**Abhinav Anand**
 
 ---
 
